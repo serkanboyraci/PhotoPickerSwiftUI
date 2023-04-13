@@ -18,6 +18,21 @@ struct ContentView: View {
         VStack {
             PhotosPicker(selection: $selectedItem, maxSelectionCount: 1, matching: .images) {
                 Text("Select Image")
+            }.onChange(of: selectedItem) { newValue in
+                guard let item = selectedItem.first else {
+                    return
+                }
+                
+                item.loadTransferable(type: Data.self) { result in
+                    switch result {
+                    case .success(let data):
+                        if let data = data {
+                            self.data = data 
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
             }
         }
     }
