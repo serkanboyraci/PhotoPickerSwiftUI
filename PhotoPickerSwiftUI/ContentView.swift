@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ContentView: View {
+    
+    @State var selectedItem : [PhotosPickerItem] = []
+    
+    @State var data  : Data?
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            PhotosPicker(selection: $selectedItem, maxSelectionCount: 1, matching: .images) {
+                Text("Select Image")
+            }
         }
-        .padding()
     }
 }
 
