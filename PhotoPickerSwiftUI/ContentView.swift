@@ -16,6 +16,18 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            
+            if let data = data {
+                if let selectedImage = UIImage(data: data) {
+                    //Spacer()
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .frame(width: 300, height: 300, alignment: .center)
+                        .padding()
+                }
+            }
+            //Spacer()
+            
             PhotosPicker(selection: $selectedItem, maxSelectionCount: 1, matching: .images) {
                 Text("Select Image")
             }.onChange(of: selectedItem) { newValue in
@@ -27,7 +39,7 @@ struct ContentView: View {
                     switch result {
                     case .success(let data):
                         if let data = data {
-                            self.data = data 
+                            self.data = data
                         }
                     case .failure(let error):
                         print(error)
